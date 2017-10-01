@@ -21,6 +21,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"io/ioutil"
+	"strconv"
 	"strings"
 	"text/template"
 
@@ -109,7 +110,7 @@ func renderGoTemplate(d *schema.ResourceData) (string, error) {
 	// step: render the template
 	rendered := new(bytes.Buffer)
 	if err := tmpl.ExecuteTemplate(rendered, "base", vars); err != nil {
-		return "", fmt.Errorf("unable to generate content, snippets: %d, error: %s", len(tmpl.Templates()), ",", err)
+		return "", fmt.Errorf("unable to generate content, snippets: %d, errors: %s, %s", len(tmpl.Templates()), ",", err)
 	}
 
 	return rendered.String(), nil
@@ -123,6 +124,9 @@ func templateFuncs() template.FuncMap {
 		},
 		"lower": func(s string) string {
 			return strings.ToLower(s)
+		},
+		"quoted": func(s string) string {
+			return strconv.Quote(s)
 		},
 		"split": func(s, delim string) []string {
 			return strings.Split(s, delim)

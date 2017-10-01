@@ -71,7 +71,7 @@ func TestGoTemplate(t *testing.T) {
 					Check: func(s *terraform.State) error {
 						got := s.RootModule().Outputs["rendered"]
 						if x.Expected != got.Value {
-							return fmt.Errorf("template:\n%s\nvars:\n%s\ngot:\n%s\nwant:\n%s\n", x.Content, x.Vars, got, x.Expected)
+							return fmt.Errorf("template:\n%s\nvars:\n%s\ngot:\n%s\nwant:\n%s", x.Content, x.Vars, got, x.Expected)
 						}
 						return nil
 					},
